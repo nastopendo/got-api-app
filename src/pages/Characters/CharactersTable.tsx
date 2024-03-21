@@ -73,23 +73,35 @@ const renderAllegiances = (allegiances: string[]) => {
 
 const CharactersTable = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
+  const [gender, setGender] = useState("Any");
+  const [culture, setCulture] = useState("");
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await fetchCharacters(5, 50);
-        setCharacters(data);
-      } catch (error) {
-        console.error(error);
-        setError("Failed to fetch characters");
-      } finally {
-        setLoading(false);
-      }
-    };
-    getData();
-  }, []);
+    fetchAndSetCharacters();
+  }, [gender]);
+
+  const fetchAndSetCharacters = async () => {
+    try {
+      const data = await fetchCharacters(
+        1,
+        10,
+        gender !== "Any" ? gender : "",
+        culture
+      );
+      setCharacters(data);
+    } catch (error) {
+      console.error(error);
+      setError("Failed to fetch characters");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFilterChange = () => {
+    fetchAndSetCharacters();
+  };
 
   if (loading) return <p>Loading characters...</p>;
   if (error) return <p>{error}</p>;
@@ -97,6 +109,25 @@ const CharactersTable = () => {
 
   return (
     <div className={styles.charactersTable}>
+      <div className={styles.filterContainer}>
+        <select
+          value={gender}
+          onChange={(e) => {
+            setGender(e.target.value);
+          }}
+        >
+          <option value="Any">Any</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        <input
+          type="text"
+          value={culture}
+          onChange={(e) => setCulture(e.target.value)}
+          placeholder="Culture"
+        />
+        <button onClick={handleFilterChange}>Filter</button>
+      </div>
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr className={styles.tableRow}>

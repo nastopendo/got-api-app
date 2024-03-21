@@ -1,9 +1,19 @@
 const BASE_URL = "https://anapioficeandfire.com/api";
 
-const fetchCharacters = async (page: number = 1, pageSize: number = 10) => {
-  const response = await fetch(
-    `${BASE_URL}/characters?page=${page}&pageSize=${pageSize}`
-  );
+const fetchCharacters = async (
+  page: number = 1,
+  pageSize: number = 10,
+  gender: string = "",
+  culture: string = ""
+) => {
+  let url = `${BASE_URL}/characters?page=${page}&pageSize=${pageSize}`;
+  if (gender) {
+    url += `&gender=${gender}`;
+  }
+  if (culture) {
+    url += `&culture=${culture}`;
+  }
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Failed to fetch characters");
   }

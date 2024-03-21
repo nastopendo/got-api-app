@@ -41,6 +41,35 @@
   padding: 20px;
 }
 
+.filterContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px auto;
+  gap: 10px;
+}
+
+.filterContainer select,
+.filterContainer input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.filterContainer button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filterContainer button:hover {
+  background-color: #0056b3;
+}
+
 @media (max-width: 768px) {
   .table {
     display: block;
@@ -49,5 +78,10 @@
   }
   .charactersTable {
     width: 100%;
+  }
+
+  .filterContainer {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
