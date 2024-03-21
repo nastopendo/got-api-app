@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchHouse } from "../../services/ApiService";
-import styles from "./HouseDetails.module.css"; // Import the CSS module
+import styles from "./HouseDetails.module.css";
 
 const HouseDetails = () => {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [house, setHouse] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -26,30 +27,41 @@ const HouseDetails = () => {
     getHouseDetails();
   }, [id]);
 
+  const goBack = () => navigate("/");
+
   if (isLoading) return <div className={styles.loading}>Loading...</div>;
   if (error) return <div className={styles.error}>{error}</div>;
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>{house?.name}</h2>
-      <p className={styles.info}>Region: {house?.region}</p>
-      <p className={styles.info}>Coat of Arms: {house?.coatOfArms}</p>
-      <p className={styles.info}>Words: {house?.words}</p>
-      <p className={styles.info}>
-        Titles: {house?.titles.join(", ") || "None"}
-      </p>
-      <p className={styles.info}>Seats: {house?.seats.join(", ") || "None"}</p>
-      <p className={styles.info}>
-        Has Died Out: {house?.diedOut ? "Yes" : "No"}
-      </p>
-      <p className={styles.info}>
-        Has Overlord: {house?.overlord ? "Yes" : "No"}
-      </p>
-      <p className={styles.info}>
-        Number of Cadet Branches: {house?.cadetBranches.length}
-      </p>
-      <p className={styles.info}>Sworn Members: {house?.swornMembers.length}</p>
-    </div>
+    <>
+      <button className={styles.backButton} onClick={goBack}>
+        ← Back to main page
+      </button>
+      <div className={styles.container}>
+        <h2 className={styles.title}>{house?.name}</h2>
+        <p className={styles.info}>Region: {house?.region}</p>
+        <p className={styles.info}>Coat of Arms: {house?.coatOfArms}</p>
+        <p className={styles.info}>Words: {house?.words}</p>
+        <p className={styles.info}>
+          Titles: {house?.titles.join(", ") || "None"}
+        </p>
+        <p className={styles.info}>
+          Seats: {house?.seats.join(", ") || "None"}
+        </p>
+        <p className={styles.info}>
+          Has Died Out: {house?.diedOut ? "Yes" : "No"}
+        </p>
+        <p className={styles.info}>
+          Has Overlord: {house?.overlord ? "Yes" : "No"}
+        </p>
+        <p className={styles.info}>
+          Number of Cadet Branches: {house?.cadetBranches.length}
+        </p>
+        <p className={styles.info}>
+          Sworn Members: {house?.swornMembers.length}
+        </p>
+      </div>
+    </>
   );
 };
 
