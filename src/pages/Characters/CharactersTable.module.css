@@ -70,6 +70,94 @@
   background-color: #0056b3;
 }
 
+.pagination
+  .paginationButtons
+  button:hover
+  .pagination
+  .paginationButtons
+  button:focus {
+  background-color: #0056b3;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.paginationButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.paginationButtons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.paginationButtons span {
+  padding: 10px 20px;
+}
+
+.paginationButtons button:hover {
+  background-color: #0056b3;
+}
+
+.paginationButtons button:focus {
+  outline: none;
+}
+
+.paginationButtons button:active {
+  background-color: #0056b3;
+}
+
+.paginationButtons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.paginationButtons button:disabled:hover {
+  background-color: #ccc;
+}
+
+.paginationSelect {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.paginationSelect:focus {
+  outline: none;
+}
+
+.paginationSelect option {
+  font-size: 16px;
+}
+
+.paginationSelect option:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.paginationSelect option:focus {
+  outline: none;
+}
+
+.paginationSelect option:active {
+  background-color: #0056b3;
+}
+
+.paginationSelect option:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 @media (max-width: 768px) {
   .table {
     display: block;

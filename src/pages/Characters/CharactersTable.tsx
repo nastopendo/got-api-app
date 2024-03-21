@@ -75,22 +75,26 @@ const CharactersTable = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [gender, setGender] = useState("Any");
   const [culture, setCulture] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(25);
+  const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    fetchAndSetCharacters();
-  }, [gender]);
+    fetchAndSetCharacters(currentPage, pageSize);
+  }, [currentPage, pageSize, gender]);
 
-  const fetchAndSetCharacters = async () => {
+  const fetchAndSetCharacters = async (page: number, pageSize: number) => {
     try {
-      const data = await fetchCharacters(
-        1,
-        10,
+      const { data, totalPages } = await fetchCharacters(
+        page,
+        pageSize,
         gender !== "Any" ? gender : "",
         culture
       );
       setCharacters(data);
+      setTotalPages(totalPages);
     } catch (error) {
       console.error(error);
       setError("Failed to fetch characters");
@@ -99,8 +103,15 @@ const CharactersTable = () => {
     }
   };
 
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      fetchAndSetCharacters(newPage, pageSize);
+    }
+  };
+
   const handleFilterChange = () => {
-    fetchAndSetCharacters();
+    fetchAndSetCharacters(currentPage, pageSize);
   };
 
   if (loading) return <p>Loading characters...</p>;
@@ -161,6 +172,33 @@ const CharactersTable = () => {
           ))}
         </tbody>
       </table>
+      <div className={styles.pagination}>
+        <div className={styles.paginationButtons}>
+          <button onClick={() => handlePageChange(1)}>First page</button>
+          <button onClick={() => handlePageChange(currentPage - 1)}>
+            Previous page
+          </button>
+          <button onClick={() => handlePageChange(currentPage + 1)}>
+            Next page
+          </button>
+          <button onClick={() => handlePageChange(totalPages)}>
+            Last page
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+        </div>
+
+        <select
+          value={pageSize.toString()}
+          onChange={(e) => setPageSize(parseInt(e.target.value, 10))}
+          className={styles.paginationSelect}
+        >
+          <option value="10">10 / page</option>
+          <option value="25">25 / page</option>
+          <option value="50">50 / page</option>
+        </select>
+      </div>
     </div>
   );
 };
