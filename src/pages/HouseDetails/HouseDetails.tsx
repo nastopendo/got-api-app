@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchHouse } from "../../services/ApiService";
+import styles from "./HouseDetails.module.css"; // Import the CSS module
 
 const HouseDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,21 +26,29 @@ const HouseDetails = () => {
     getHouseDetails();
   }, [id]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (isLoading) return <div className={styles.loading}>Loading...</div>;
+  if (error) return <div className={styles.error}>{error}</div>;
 
   return (
-    <div>
-      <h2>{house?.name}</h2>
-      <p>Region: {house?.region}</p>
-      <p>Coat of Arms: {house?.coatOfArms}</p>
-      <p>Words: {house?.words}</p>
-      <p>Titles: {house?.titles.join(", ") || "None"}</p>
-      <p>Seats: {house?.seats.join(", ") || "None"}</p>
-      <p>Has Died Out: {house?.diedOut ? "Yes" : "No"}</p>
-      <p>Has Overlord: {house?.overlord ? "Yes" : "No"}</p>
-      <p>Number of Cadet Branches: {house?.cadetBranches.length}</p>
-      <p>Sworn Members: {house?.swornMembers.length}</p>
+    <div className={styles.container}>
+      <h2 className={styles.title}>{house?.name}</h2>
+      <p className={styles.info}>Region: {house?.region}</p>
+      <p className={styles.info}>Coat of Arms: {house?.coatOfArms}</p>
+      <p className={styles.info}>Words: {house?.words}</p>
+      <p className={styles.info}>
+        Titles: {house?.titles.join(", ") || "None"}
+      </p>
+      <p className={styles.info}>Seats: {house?.seats.join(", ") || "None"}</p>
+      <p className={styles.info}>
+        Has Died Out: {house?.diedOut ? "Yes" : "No"}
+      </p>
+      <p className={styles.info}>
+        Has Overlord: {house?.overlord ? "Yes" : "No"}
+      </p>
+      <p className={styles.info}>
+        Number of Cadet Branches: {house?.cadetBranches.length}
+      </p>
+      <p className={styles.info}>Sworn Members: {house?.swornMembers.length}</p>
     </div>
   );
 };
