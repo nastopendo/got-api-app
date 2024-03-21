@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchCharacters } from "../../services/ApiService";
 import styles from "./CharactersTable.module.css";
 
-interface Character {
+export interface Character {
   url: string;
   name: string;
   gender: string;
@@ -34,7 +34,7 @@ const extractYear = (dateStr: string): number | undefined => {
   return undefined;
 };
 
-const determineIfAlive = (character: Character) => {
+export const determineIfAlive = (character: Character) => {
   const { born, died } = character;
   if (!born && !died) {
     return "Unknown";
@@ -52,7 +52,7 @@ const determineIfAlive = (character: Character) => {
 
     const ageAtDeath = diedYear - bornYear;
 
-    return `No, died at ${ageAtDeath} years old"`;
+    return `No, died at ${ageAtDeath} years old`;
   }
   return "Yes";
 };
