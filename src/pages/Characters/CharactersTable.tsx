@@ -110,11 +110,12 @@ const CharactersTable = () => {
         <tbody className={styles.tbody}>
           {characters.map((character, index) => (
             <tr key={index} className={styles.tableRow}>
-              <td className={styles.tableCell}>{`${character.name}${
-                character.aliases.length
-                  ? ", " + character.aliases.join(", ")
-                  : ""
-              }`}</td>
+              <td className={styles.tableCell}>
+                {" "}
+                {[character.name, ...character.aliases]
+                  .filter(Boolean)
+                  .join(", ")}
+              </td>
               <td className={styles.tableCell}>
                 {determineIfAlive(character)}
               </td>
