@@ -113,19 +113,10 @@ const CharactersTable = () => {
     fetchAndSetCharacters(currentPage, pageSize);
   };
 
-  if (loading) return <p>Loading characters...</p>;
-  if (error) return <p>{error}</p>;
-  if (characters.length === 0) return <p>No characters found.</p>;
-
   return (
     <div className={styles.charactersTable}>
       <div className={styles.filterContainer}>
-        <select
-          value={gender}
-          onChange={(e) => {
-            setGender(e.target.value);
-          }}
-        >
+        <select value={gender} onChange={(e) => setGender(e.target.value)}>
           <option value="Any">Any</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
@@ -171,6 +162,11 @@ const CharactersTable = () => {
           ))}
         </tbody>
       </table>
+      {loading && <p>Loading characters...</p>}
+      {error && <p>{error}</p>}
+      {!loading && !error && characters.length === 0 && (
+        <p>No characters found.</p>
+      )}
       <div className={styles.pagination}>
         <div className={styles.paginationButtons}>
           <button onClick={() => handlePageChange(1)}>First page</button>
